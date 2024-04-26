@@ -1,15 +1,13 @@
 import streamlit as st
-from langchain_core.messages import HumanMessage, AIMessage, SystemMessage
-from langchain_core.prompts import ChatPromptTemplate, SystemMessagePromptTemplate, HumanMessagePromptTemplate
 from langchain_google_genai import ChatGoogleGenerativeAI
-from langchain_core.output_parsers import StrOutputParser
-from langchain_community.document_loaders import PDFMinerLoader
-from langchain_text_splitters import NLTKTextSplitter
-from langchain_community.vectorstores import Chroma
 from langchain_google_genai import GoogleGenerativeAIEmbeddings
+from langchain_core.messages import SystemMessage
+from langchain_core.prompts import ChatPromptTemplate, HumanMessagePromptTemplate
+from langchain_core.output_parsers import StrOutputParser
+from langchain_community.vectorstores import Chroma
 from langchain_core.runnables import RunnablePassthrough
 from langchain_community.document_loaders import PyPDFLoader
-import nltk
+
 
 loader = PyPDFLoader("C:\\Users\\RATNADEEP\\Downloads\\2404.07143.pdf")
 pages = loader.load_and_split()
@@ -62,7 +60,6 @@ chain = (
 user_input = st.text_area("Write your questions here related to this paper")
 stream = True
 if st.button("Submit"):
-    st.header(user_input)
     response = chain.invoke(user_input)
     st.write(response)
     
